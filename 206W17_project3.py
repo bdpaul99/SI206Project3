@@ -62,7 +62,6 @@ def get_user_tweets(twitter_handle):
 try:
 	umich_tweets = CACHE_DICTION['umich_tweets']
 except:
-	print("exception case")
 	umich_tweets = get_user_tweets("umich")
 	CACHE_DICTION['umich_tweets'] = umich_tweets
 
@@ -112,15 +111,11 @@ for user in user_names:
 		insert_tuple = (data['id'], user, data['favourites_count'], data['description'])
 		cur.execute(statement, insert_tuple)
 	except:
-		print("second exception clause")
 		data = api.get_user(screen_name = user)
 		CACHE_DICTION[user] = data
 		insert_tuple = (data['id'], user, data['favourites_count'], data['description'])
 		cur.execute(statement, insert_tuple)
 	
-
-
-
 
 
 ## You should load into the Tweets table: 
@@ -193,6 +188,7 @@ twitter_info_diction = defaultdict(list)
 for t in twinfo_tuples:
 	twitter_info_diction[t[0]].append(t[1])
 twitter_info_diction = dict(twitter_info_diction)
+
 
 
 ### IMPORTANT: MAKE SURE TO CLOSE YOUR DATABASE CONNECTION AT THE END OF THE FILE HERE SO YOU DO NOT LOCK YOUR DATABASE (it's fixable, but it's a pain). ###
