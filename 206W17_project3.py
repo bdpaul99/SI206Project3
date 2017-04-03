@@ -101,7 +101,9 @@ user_names = []
 user_mentions = [tweet['entities']['user_mentions'] for tweet in umich_tweets]
 for each in user_mentions:
 	for mention in each:
-		user_names.append(mention['screen_name'])
+		if mention['screen_name'] not in user_names:
+
+			user_names.append(mention['screen_name'])
 
 
 statement = 'INSERT INTO Users Values (?, ?, ?, ?)'
@@ -183,7 +185,6 @@ cur.execute('SELECT Users.screen_name, Tweets.text FROM Users INNER JOIN Tweets 
 twinfo_tuples = cur.fetchall()
 
 from collections import defaultdict
-
 twitter_info_diction = defaultdict(list)
 for t in twinfo_tuples:
 	twitter_info_diction[t[0]].append(t[1])
